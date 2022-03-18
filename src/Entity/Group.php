@@ -5,21 +5,32 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\GroupRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: GroupRepository::class)]
 #[ORM\Table(name: '`group`')]
-#[ApiResource]
+#[ApiResource(
+    collectionOperations: ['get', 'post'],
+    itemOperations: ['get', 'put', 'delete'],
+    attributes: [
+        'normalization_context' => ['groups' => ['group:read']],
+        'denormalization_context' => ['groups' => ['group:write']],
+    ],
+)]
 class Group
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(["group:read"])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 60)]
+    #[Groups(["group:write", "group:read"])]
     private $name;
 
     #[ORM\Column(type: 'text', nullable: true)]
+    #[Groups(["group:write", "group:read"])]
     private $description;
 
     public function getId(): ?int

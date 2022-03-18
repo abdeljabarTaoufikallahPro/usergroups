@@ -5,36 +5,52 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
-#[ApiResource]
+#[ApiResource(
+    collectionOperations: ['get', 'post'],
+    itemOperations: ['get', 'put', 'delete'],
+    attributes: [
+        'normalization_context' => ['users' => ['user:read']],
+        'denormalization_context' => ['users' => ['user:write']],
+    ],
+)]
 class User
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(["group:read"])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 50)]
+    #[Groups(["user:write", "user:read"])]
     private $firstName;
 
     #[ORM\Column(type: 'string', length: 50)]
+    #[Groups(["user:write", "user:read"])]
     private $lastName;
 
     #[ORM\Column(type: 'string', length: 100)]
+    #[Groups(["user:write", "user:read"])]
     private $email;
 
     #[ORM\Column(type: 'string', length: 10)]
+    #[Groups(["user:write", "user:read"])]
     private $phone;
 
     #[ORM\Column(type: 'integer')]
+    #[Groups(["user:write", "user:read"])]
     private $age;
 
     #[ORM\Column(type: 'string', length: 30)]
+    #[Groups(["user:write", "user:read"])]
     private $type;
 
     #[ORM\ManyToOne(targetEntity: Group::class)]
+    #[Groups(["user:read"])]
     private $userGroup;
 
     public function getId(): ?int
