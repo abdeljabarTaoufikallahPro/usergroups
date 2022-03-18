@@ -526,6 +526,11 @@ MigrationBackup/
 
 # End of https://www.toptal.com/developers/gitignore/api/symfony,phpstorm,vs
 
+public/bundles
+.idea
+
+docker/mysql
+
 db-data
 
 .DS_Store

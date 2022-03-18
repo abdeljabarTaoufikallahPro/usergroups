@@ -1,5 +1,8 @@
 version: "3"
 
+networks:
+  nginx-php81-postgres14:
+
 services:
   # nginx
   nginx:
@@ -13,6 +16,8 @@ services:
     depends_on:
       - php
       - postgres
+    networks:
+      - nginx-php81-postgres14
 
   # php
   php:
@@ -26,10 +31,13 @@ services:
       - ./:/var/www/project
     depends_on:
       - postgres
+    networks:
+      - nginx-php81-postgres14
 
   # postgres
   postgres:
     image: postgres:14.2-alpine
+    container_name: postgres
     restart: on-failure
     environment:
       POSTGRES_DB: usergroups
@@ -40,3 +48,5 @@ services:
       - ./db-data:/var/lib/postgresql/data:rw
     ports:
       - "15432:5432"
+    networks:
+      - nginx-php81-postgres14
