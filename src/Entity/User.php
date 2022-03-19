@@ -7,7 +7,9 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -28,6 +30,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
     'type' => 'start',
     'userGroup' => 'exact',
 ])]
+#[UniqueEntity('email')]
+#[UniqueEntity('phone')]
 class User
 {
     #[ORM\Id]
@@ -38,25 +42,37 @@ class User
 
     #[ORM\Column(type: 'string', length: 50)]
     #[Groups(["user:write", "user:read"])]
+    #[Assert\NotBlank]
+    #[Assert\Type("alpha")]
     private $firstName;
 
     #[ORM\Column(type: 'string', length: 50)]
+    #[Assert\NotBlank]
+    #[Assert\Type("alpha")]
     #[Groups(["user:write", "user:read"])]
     private $lastName;
 
     #[ORM\Column(type: 'string', length: 100)]
+    #[Assert\NotBlank]
+    #[Assert\Email]
     #[Groups(["user:write", "user:read"])]
     private $email;
 
     #[ORM\Column(type: 'string', length: 10)]
+    #[Assert\NotBlank]
+    #[Assert\Regex("/^(0)([0-9]){9}$/i")]
     #[Groups(["user:write", "user:read"])]
     private $phone;
 
     #[ORM\Column(type: 'integer')]
+    #[Assert\NotBlank]
+    #[Assert\Type("integer")]
     #[Groups(["user:write", "user:read"])]
     private $age;
 
     #[ORM\Column(type: 'string', length: 30)]
+    #[Assert\NotBlank]
+    #[Assert\Type("string")]
     #[Groups(["user:write", "user:read"])]
     private $type;
 

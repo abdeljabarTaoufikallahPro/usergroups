@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource(
     collectionOperations: [],
@@ -23,5 +24,6 @@ class UserGroup
     public $id;
 
     #[Groups(['user_group:write', 'user_group:read'])]
+    #[Assert\NotBlank]
     public $group;
 }

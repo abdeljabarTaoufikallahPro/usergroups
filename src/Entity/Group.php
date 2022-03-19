@@ -7,7 +7,9 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\GroupRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: GroupRepository::class)]
 #[ORM\Table(name: '`group`')]
@@ -23,6 +25,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     'id' => 'exact',
     'name' => 'word_start',
 ])]
+#[UniqueEntity('name')]
 class Group
 {
     #[ORM\Id]
@@ -32,10 +35,13 @@ class Group
     private $id;
 
     #[ORM\Column(type: 'string', length: 60)]
+    #[Assert\NotBlank]
+    #[Assert\Type("string")]
     #[Groups(["group:write", "group:read"])]
     private $name;
 
     #[ORM\Column(type: 'text', nullable: true)]
+    #[Assert\Type("string")]
     #[Groups(["group:write", "group:read"])]
     private $description;
 
