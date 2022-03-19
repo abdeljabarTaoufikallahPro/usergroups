@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -17,6 +19,15 @@ use Symfony\Component\Serializer\Annotation\Groups;
         'denormalization_context' => ['groups' => ['user:write']],
     ],
 )]
+#[ApiFilter(SearchFilter::class, properties: [
+    'id' => 'exact',
+    'firstName' => 'word_start',
+    'lastName' => 'word_start',
+    'email' => 'exact',
+    'phone' => 'exact',
+    'type' => 'start',
+    'userGroup' => 'exact',
+])]
 class User
 {
     #[ORM\Id]
