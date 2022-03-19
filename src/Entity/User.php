@@ -13,8 +13,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
     collectionOperations: ['get', 'post'],
     itemOperations: ['get', 'put', 'delete'],
     attributes: [
-        'normalization_context' => ['users' => ['user:read']],
-        'denormalization_context' => ['users' => ['user:write']],
+        'normalization_context' => ['groups' => ['user:read']],
+        'denormalization_context' => ['groups' => ['user:write']],
     ],
 )]
 class User
@@ -22,7 +22,7 @@ class User
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(["group:read"])]
+    #[Groups(["user:read"])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 50)]
