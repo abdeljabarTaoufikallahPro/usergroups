@@ -4,6 +4,7 @@ namespace App\Factory;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use App\Utils\Util;
 use Zenstruck\Foundry\RepositoryProxy;
 use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
@@ -28,9 +29,15 @@ use Zenstruck\Foundry\Proxy;
  */
 final class UserFactory extends ModelFactory
 {
-    public function __construct()
+    /**
+     * @var \App\Utils\Util
+     */
+    private Util $util;
+
+    public function __construct(Util $util)
     {
         parent::__construct();
+        $this->util = $util;
     }
 
     protected function getDefaults(): array
@@ -39,7 +46,7 @@ final class UserFactory extends ModelFactory
             'firstName' => self::faker()->firstName(),
             'lastName' => self::faker()->lastName(),
             'email' => self::faker()->email(),
-            'phone' => $this->fakeNumber(),
+            'phone' => $this->util->fakeNumber(),
             'age' => self::faker()->numberBetween(13,55),
             'type' => ['Test #1', 'Test #2', 'Test #3', 'Test #4', 'Test #5'][rand(0, 4)],
             'userGroup' => [GroupFactory::random(), null][rand(0,1)],
