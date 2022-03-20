@@ -5,6 +5,7 @@ namespace App\Tests\Api;
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\Client;
 use App\DataFixtures\AppFixtures;
 use App\Entity\Group;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class GroupsTest extends AbstractTestCase
 {
@@ -43,17 +44,7 @@ class GroupsTest extends AbstractTestCase
             'description' => 'Cum lamia velum, omnes amicitiaes desiderium fidelis, fortis scutumes.',
         ];
 
-        $response = $client->request('POST', '/groups', [
-            'json' => [
-                'name' => $data['name'],
-                'description' => $data['description'],
-            ],
-            'headers' => [
-                'authorization' => sprintf('Bearer %s', $token)
-            ]
-        ]);
-
-        $this->assertResponseStatusCodeSame(201);
+        $response = $this->createNewGroup($client, $token, $data);
         $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
         $this->assertJsonContains([
             '@context' => '/contexts/Group',
@@ -160,12 +151,14 @@ class GroupsTest extends AbstractTestCase
 
     /**
      * @param Client $client
-     * @return string[]
+     * @param string $token
+     * @param array $data
+     * @return \Symfony\Contracts\HttpClient\ResponseInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      */
-    private function createNewGroup(Client $client, string $token, array $data): array
+    private function createNewGroup(Client $client, string $token, array $data): ResponseInterface
     {
-        $client->request('POST', '/groups', [
+        $response = $client->request('POST', '/groups', [
             'json' => [
                 'name' => $data['name'],
                 'description' => $data['description'],
@@ -177,6 +170,6 @@ class GroupsTest extends AbstractTestCase
 
         $this->assertResponseStatusCodeSame(201);
 
-        return $data;
+        return $response;
     }
 }
