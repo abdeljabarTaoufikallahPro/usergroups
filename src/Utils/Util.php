@@ -13,4 +13,11 @@ class Util
 
         return sprintf('0%s', $sequence);
     }
+
+    public function getIdFromIri(?string $iri): int
+    {
+        preg_match('!\d+!', $iri, $matches, PREG_OFFSET_CAPTURE);
+        if (!empty($matches)) return $matches[0][0];
+        return 0;
+    }
 }
