@@ -3,24 +3,27 @@
 This is a mini API for managing users & groups.
 
 ## 1. Clone the repository
-`git clone https://github.com/abdeljabar/usergroups`
+`git clone git@github.com:abdeljabar/usergroups.git`
 
-## 2. Build the containers
+## 2. CD to the new directory
+`cd usergroups`
+
+## 3. Build the containers
 `docker-compose up --build`
 
-## 3. Run composer install
+## 4. Run composer install
 `docker-compose run php composer install`
 
-## 4. Create database
+## 5. Create database
 `docker-compose run php bin/console d:d:c`
 
-## 5. Run doctrine migrations
+## 6. Run doctrine migrations
 `docker-compose run php bin/console d:m:m`
 
-## 6. Load doctrine fixtures
+## 7. Load doctrine fixtures
 `docker-compose run php bin/console d:f:l`
 
-## 7. Link to the app
+## 8. Link to the app
 `http://localhost:8080`
 
 # Automatic tests
