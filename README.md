@@ -23,7 +23,10 @@ This is a mini API for managing users & groups.
 ## 7. Load doctrine fixtures
 `docker-compose run php bin/console d:f:l`
 
-## 8. Link to the app
+## 8. Generate jwt keypair
+`docker-compose run php bin/console lexik:jwt:generate-keypair`
+
+## 9. Link to the app
 `http://localhost:8080`
 
 # Automatic tests
