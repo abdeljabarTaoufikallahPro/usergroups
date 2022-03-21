@@ -80,12 +80,21 @@ The json body:
 }`
 
 ## To update a user
-`POST http://localhost:8080/users/{id}`
+`PUT http://localhost:8080/users/{id}`
 
 The json body:
 
 `{
 "firstName": "John Edited"
+}`
+
+## To attach a group to user
+`PUT http://localhost:8080/user_groups/{id}`
+
+The json body:
+
+`{
+"group": "/groups/1"
 }`
 
 ## To delete a user
@@ -102,7 +111,7 @@ The json body:
 }`
 
 ## To update a group
-`POST http://localhost:8080/groups/{id}`
+`PUT http://localhost:8080/groups/{id}`
 
 The json body:
 
