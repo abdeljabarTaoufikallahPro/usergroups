@@ -39,8 +39,6 @@ This is a mini API for managing users & groups.
 
 # Getting started with the Api
 
-These endpoints don't necessitate authentication.
-
 ## Get paginated users
 `GET http://localhost:8080/users`
 
@@ -64,6 +62,16 @@ The json body:
 "username": "admin",
 "password": "password"
 }`
+
+Response body:
+
+{
+"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2NDc3MjkxMzAsImV4cCI6MTY0NzczMjczMCwicm9sZXMiOlsiUk9MRV9BRE1JTiJdLCJ1c2VybmFtZSI6ImFkbWluIn0.f85h6fPgy7Zj5bjMqa0AwIWLql1YiX0cBsMGd0adFhxVkaQDH3i1B0ZIbi8RulTVSZvPIdaKGThbu5LjdsqMROjR4zU0P8FCF3J6l0MDNGdXEKlPQiC1MBTAo3WJ8-tGP6kSmCiJpmq5u68H4bA9ld9UTm63YO1Fx6HgkakSuv6a00aRUQIQ-JEO6cmhM6Xn6Tb0Qvg7TL-30r1_njhMkOeHaYScts8J-jGQOnXXvzYascBDDSFQV2XqTiwv2asHW9tLGuq3QWFxlTHA33P1nSGDaSvq4xUHaalM2Q_ozkZ2bYStjpbrcqQnQd27zdpZ6rQVfQNhFNNPef9yh62HmQ"
+}
+
+Add the new generated token to the headers of the rest of the endpoints like this:
+
+`-H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2NDc3MjkxMzAsImV4cCI6MTY0NzczMjczMCwicm9sZXMiOlsiUk9MRV9BRE1JTiJdLCJ1c2VybmFtZSI6ImFkbWluIn0.f85h6fPgy7Zj5bjMqa0AwIWLql1YiX0cBsMGd0adFhxVkaQDH3i1B0ZIbi8RulTVSZvPIdaKGThbu5LjdsqMROjR4zU0P8FCF3J6l0MDNGdXEKlPQiC1MBTAo3WJ8-tGP6kSmCiJpmq5u68H4bA9ld9UTm63YO1Fx6HgkakSuv6a00aRUQIQ-JEO6cmhM6Xn6Tb0Qvg7TL-30r1_njhMkOeHaYScts8J-jGQOnXXvzYascBDDSFQV2XqTiwv2asHW9tLGuq3QWFxlTHA33P1nSGDaSvq4xUHaalM2Q_ozkZ2bYStjpbrcqQnQd27zdpZ6rQVfQNhFNNPef9yh62HmQ'`
 
 ## To create a new user
 `POST http://localhost:8080/users`
